@@ -7,7 +7,9 @@
 
 @theme {
   --color-dark: #222222;
-
+  --color-green-text: #012915;
+  --color-input-border: #dbdbdb;
+  --color-brand-primary: #036937;
   --animate-flicker: flicker 3s linear infinite;
   --animate-shimmer: shimmer 1.3s linear infinite;
 

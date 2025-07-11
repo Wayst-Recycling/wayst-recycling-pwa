@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import * as React from 'react';
 
 import '@/styles/globals.css';
 
 import Providers from '@/components/providers/providers';
 
+import { appMaxWidth } from '@/app/_utils/helpers';
 import { auth } from '@/auth';
 import { siteConfig } from '@/constant/config';
 
@@ -39,6 +41,12 @@ export const metadata: Metadata = {
   },
 };
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+});
+
 export default async function RootLayout({
   children,
 }: {
@@ -47,8 +55,8 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html>
-      <body>
+    <html className={`${inter.className}`}>
+      <body style={{ maxWidth: appMaxWidth }} className='mx-auto'>
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

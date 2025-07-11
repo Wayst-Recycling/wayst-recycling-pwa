@@ -14,19 +14,19 @@ const inputVariants = cva(
   cn(
     'flex w-full rounded- border',
     'focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus:shadow-none',
-    'focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white focus:outline-none focus-visible:ring',
+    'focus-visible:ring-brand-primary focus-visible:ring-offset-brand-primary focus:outline-none focus-visible:ring',
   ),
   {
     variants: {
       variant: {
         primary: cn(
-          'border bg-input-bg border-input-border placeholder:font-normal placeholder:text-ring',
+          'border bg-input-bg border-input-border/70 placeholder:text-sm placeholder:font-normal placeholder:text-ring rounded-xl',
         ),
       },
 
       size_variant: {
         sm: 'px-2 py-1 text-base',
-        base: 'p-4 text-base',
+        base: 'px-4 py-6 text-base',
       },
     },
 
@@ -87,7 +87,7 @@ const GenInput = ({
           {label}
         </Label>
       )}
-      <div className='w-full relative'>
+      <div className='w-full relative mt-2'>
         <Input
           type={type === 'password' ? (hidden ? 'password' : 'text') : type}
           className={cn(inputVariants({ variant, size_variant, className }))}

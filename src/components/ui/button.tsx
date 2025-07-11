@@ -11,7 +11,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-primary text-white shadow-xs hover:bg-primary/90',
+        default:
+          'bg-brand-primary text-white shadow-xs hover:bg-brand-primary/90 rounded-xl',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
         'destructive-text':
@@ -23,7 +24,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'px-3 py-3.5 text-sm md:text-base',
+        default: 'px-3 py-3.5 text-sm ',
         sm: 'px-3 py-2.5',
         text: 'text-sm md:text-base',
         button:
