@@ -45,7 +45,7 @@ const LoginPage = () => {
           </span>
           <Link
             className='font-medium text-sm text-brand-primary'
-            href={appRoutes.auth.register}
+            href={appRoutes.auth.forgotPassword}
           >
             Forgot Password?
           </Link>

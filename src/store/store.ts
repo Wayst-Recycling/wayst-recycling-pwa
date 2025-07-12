@@ -19,7 +19,11 @@ import {
 } from '@/actions/action.constants';
 import { authenticated_global_api } from '@/actions/authenticated-api';
 import { unauthenticated_global_api } from '@/actions/unauthenticated-api';
-import { REGISTER_REDUCER_PATH } from '@/slices/constants';
+import {
+  FORGOT_PASSWORD_REDUCER_PATH,
+  REGISTER_REDUCER_PATH,
+} from '@/slices/constants';
+import { forgotPasswordReducer } from '@/slices/forgot-password.slice';
 import { registerReducer } from '@/slices/register.slice';
 
 const persistConfig = {
@@ -29,6 +33,7 @@ const persistConfig = {
     UNAUTHENTICATED_GLOBAL_API_REDUCER_PATH,
     AUTHENTICATED_GLOBAL_API_REDUCER_PATH,
     REGISTER_REDUCER_PATH,
+    FORGOT_PASSWORD_REDUCER_PATH,
   ],
 };
 
@@ -36,6 +41,7 @@ const rootReducer = combineReducers({
   [UNAUTHENTICATED_GLOBAL_API_REDUCER_PATH]: unauthenticated_global_api.reducer,
   [AUTHENTICATED_GLOBAL_API_REDUCER_PATH]: authenticated_global_api.reducer,
   [REGISTER_REDUCER_PATH]: registerReducer,
+  [FORGOT_PASSWORD_REDUCER_PATH]: forgotPasswordReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
