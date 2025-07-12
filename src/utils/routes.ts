@@ -4,4 +4,8 @@ export const appRoutes = {
     register: '/register',
     forgotPassword: '/forgot-password',
   },
+  home: '/',
+  schedule: '/schedule',
+  history: '/history',
+  settings: '/settings',
 };
