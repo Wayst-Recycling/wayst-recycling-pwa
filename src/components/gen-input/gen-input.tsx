@@ -2,6 +2,7 @@
 
 import { cva, VariantProps } from 'class-variance-authority';
 import { FieldInputProps, FieldMetaProps } from 'formik';
+import { Eye, EyeOff } from 'lucide-react';
 import { ComponentPropsWithRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -101,7 +102,7 @@ const GenInput = ({
             onClick={toggleVisibility}
             className='absolute top-1/2 -translate-y-1/2 right-4 text-ring select-none text-base font-medium'
           >
-            {hidden ? 'Show' : 'Hide'}
+            {hidden ? <Eye /> : <EyeOff />}
           </button>
         )}
       </div>
