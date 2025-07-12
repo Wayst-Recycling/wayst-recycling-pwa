@@ -14,7 +14,7 @@ import { appRoutes } from '@/utils/routes';
 const RegisterTokenPage = () => {
   const dispatch = useAppDispatch();
   const handleBack = () => {
-    dispatch(updateRegisterStage('email'));
+    dispatch(updateRegisterStage('bio'));
   };
   const router = useRouter();
 

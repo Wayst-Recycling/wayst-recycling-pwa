@@ -29,7 +29,7 @@ const Providers = ({
       <Provider store={storeRef.current}>
         <AppProgressProvider
           height='4px'
-          color='#fff232'
+          color='#036937'
           options={{ showSpinner: false }}
           shallowRouting
         >

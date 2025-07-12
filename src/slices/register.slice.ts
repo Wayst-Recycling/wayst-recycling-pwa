@@ -13,7 +13,7 @@ const initialState = {
     [REGISTER_EMAIL_KEY]: '',
     [REGISTER_PHONE_KEY]: '',
     [REGISTER_PASSWORD_KEY]: '',
-    stage: 'verification',
+    stage: 'email',
   },
 };
 
