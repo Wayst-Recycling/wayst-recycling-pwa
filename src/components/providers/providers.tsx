@@ -35,7 +35,7 @@ const Providers = ({
         >
           <PersistGate loading={null} persistor={persistorRef.current} />
           {children}
-          <Toaster />
+          <Toaster richColors />
         </AppProgressProvider>
       </Provider>
     </SessionProvider>

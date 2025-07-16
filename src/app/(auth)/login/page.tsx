@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import React from 'react';
 
@@ -5,9 +6,15 @@ import Logo from '@/components/assets/logo';
 import GenInput from '@/components/gen-input/gen-input';
 import { Button } from '@/components/ui/button';
 
+import {
+  LOGIN_EMAIL_KEY,
+  LOGIN_PASSWORD_KEY,
+} from '@/actions/auth/auth-constants.server';
+import { useLoginForm } from '@/app/(auth)/login/_hooks/useLogin';
 import { appRoutes } from '@/utils/routes';
 
 const LoginPage = () => {
+  const { formik, getInputProps, isLoading } = useLoginForm();
   return (
     <div className='min-h-screen flex flex-col px-5 pt-5'>
       <div className='flex-grow'>
@@ -20,20 +27,27 @@ const LoginPage = () => {
           Log in to access your account and continue earning from your waste.
         </p>
 
-        <form className='mt-7 space-y-4 flex flex-col'>
+        <form
+          className='mt-7 space-y-4 flex flex-col'
+          onSubmit={formik.handleSubmit}
+        >
           <GenInput
-            id='email'
+            id={LOGIN_EMAIL_KEY}
             label='Email Address'
             placeholder='Enter your email address'
+            {...getInputProps(LOGIN_EMAIL_KEY)}
           />
           <GenInput
             containerClassName=''
-            id='password'
+            id={LOGIN_PASSWORD_KEY}
             label='Password'
             type='password'
             placeholder='Enter your password'
+            {...getInputProps(LOGIN_PASSWORD_KEY)}
           />
-          <Button className=''>Register</Button>
+          <Button type='submit' isLoading={isLoading} className=''>
+            Login
+          </Button>
           <span className='text-sm text-black/70'>
             Don't have an account?{' '}
             <Link

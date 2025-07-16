@@ -7,6 +7,7 @@
 
 @theme {
   --color-dark: #222222;
+  --color-white: white;
   --color-green-text: #012915;
   --color-input-border: #dbdbdb;
   --color-brand-primary: #036937;

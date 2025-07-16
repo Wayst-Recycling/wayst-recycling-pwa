@@ -2,7 +2,7 @@ import React from 'react';
 
 const VerificationRocket = () => {
   return (
-    <div>
+    <div className='animate-bounce'>
       <svg
         width='181'
         height='204'

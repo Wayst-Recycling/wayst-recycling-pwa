@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth/next';
 import * as React from 'react';
 
 import '@/styles/globals.css';
@@ -7,7 +8,7 @@ import '@/styles/globals.css';
 import Providers from '@/components/providers/providers';
 
 import { appMaxWidth } from '@/app/_utils/helpers';
-import { auth } from '@/auth';
+import { authOptions } from '@/auth';
 import { siteConfig } from '@/constant/config';
 
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   return (
     <html className={`${inter.className}`}>

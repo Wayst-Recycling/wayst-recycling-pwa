@@ -5,7 +5,7 @@ import logger from '@/lib/logger';
 import { INetworkErrorResponse } from '@/actions/action.types';
 import { AppError } from '@/utils/error';
 
-const BASE_URL = process.env.API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 interface ServerActionParams {
   url: string;
@@ -61,7 +61,7 @@ async function executeServerAction({
     if (!response.ok) {
       const error: INetworkErrorResponse = data;
 
-      throw new AppError(error.message, response.status);
+      throw new AppError(error.errorMessage, response.status);
     }
 
     return data;

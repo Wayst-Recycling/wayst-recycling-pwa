@@ -5,9 +5,12 @@ import Logo from '@/components/assets/logo';
 import GenInput from '@/components/gen-input/gen-input';
 import { Button } from '@/components/ui/button';
 
+import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-constants.server';
+import { useRegisterEmailForm } from '@/app/(auth)/register/_hooks/useRegisterEmailForm';
 import { appRoutes } from '@/utils/routes';
 
 const RegisterEmailForm = () => {
+  const { formik, getInputProps } = useRegisterEmailForm();
   return (
     <div className='min-h-screen flex flex-col px-5 pt-5'>
       <div className='flex-grow'>
@@ -19,13 +22,17 @@ const RegisterEmailForm = () => {
           Create your free account and start earning from your waste today
         </p>
 
-        <form className='mt-7 flex flex-col'>
+        <form className='mt-7 flex flex-col' onSubmit={formik.handleSubmit}>
           <GenInput
-            id='email'
+            id={REGISTER_EMAIL_KEY}
             label='Email Address'
+            type='email'
             placeholder='Enter your email address'
+            {...getInputProps(REGISTER_EMAIL_KEY)}
           />
-          <Button className='my-5'>Register</Button>
+          <Button className='my-5' type='submit'>
+            Register
+          </Button>
           <span className='text-sm text-black/70'>
             Already have an account?{' '}
             <Link
