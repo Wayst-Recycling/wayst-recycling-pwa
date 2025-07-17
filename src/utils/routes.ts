@@ -11,5 +11,5 @@ export const appRoutes = {
     dropoff: '/schedule/dropoff',
   },
   history: '/history',
-  settings: '/settings',
+  profile: '/profile',
 };
