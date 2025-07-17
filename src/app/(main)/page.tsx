@@ -1,7 +1,9 @@
 'use client';
-import { ChevronRight } from 'lucide-react';
+import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
 
 import CurrencySelect from '@/app/(main)/_components/currency-select';
 import FormatBalance from '@/app/(main)/_components/format-balance';
@@ -27,56 +29,71 @@ const HomePage = () => {
             <p className='text-base font-medium'>Welcome to Wayst!</p>
           </div>
         </div>
-        <div className='mt-4 flex flex-col items-center space-y-5'>
+        <div className='mt-4 flex flex-col items-center space-y-9'>
           <CurrencySelect />
 
-          <div className='flex items-end space-x-1'>
-            <p className='text-xs'>cUSD</p>
-            <FormatBalance
-              isLoading={false}
-              value={Number(formatcUsd(78.765))}
-              decimalClassName='text-xl font-semibold'
-              wholeNumberClassName='text-4xl font-semibold'
-            />
+          <div className='space-y-2'>
+            <div className='flex items-end space-x-1'>
+              <p className='text-xs'>cUSD</p>
+              <FormatBalance
+                isLoading={false}
+                value={Number(formatcUsd(78.765))}
+                decimalClassName='text-xl font-semibold'
+                wholeNumberClassName='text-4xl font-semibold'
+              />
+            </div>
+            <TotalEarningsTooltip />
           </div>
 
-          <TotalEarningsTooltip />
+          <Button
+            variant='secondary'
+            className='flex items-center space-x-0.5 px-12'
+          >
+            <ArrowUpRight className='text-brand-primary w-5 aspect-square' />
+            <p>Withdraw</p>
+          </Button>
         </div>
 
-        <div className='mt-4 flex flex-col'>
+        <div className='mt-5 flex flex-col'>
           <p className='text-xl font-semibold'>Quick Actions</p>
           <div className='mt-3 grid grid-cols-3 gap-3'>
             <Link
               href='/'
-              className='flex flex-col items-center rounded-xl bg-white py-3'
+              className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
-              {/* <Image
-                src="/assets/pickup.png"
-                alt="pickup"
-                className="relative aspect-square w-16 object-contain"
-              /> */}
+              <Image
+                src='/images/pickup.png'
+                alt='pickup'
+                className='relative aspect-square object-contain'
+                width={74}
+                height={74}
+              />
               <p className='mt-2 text-xs font-medium'>Pickup</p>
             </Link>
             <Link
               href='/'
-              className='flex flex-col items-center rounded-xl bg-white py-3'
+              className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
-              {/* <Image
-                src="/assets/gift.png"
-                alt="gift"
-                className="relative aspect-square w-16 object-contain"
-              /> */}
+              <Image
+                src='/images/gift.png'
+                alt='gift'
+                className='relative aspect-square object-contain'
+                width={74}
+                height={74}
+              />
               <p className='mt-2 text-xs font-medium'>Daily Claim</p>
             </Link>
             <Link
               href='/'
-              className='flex flex-col items-center rounded-xl bg-white py-3'
+              className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
-              {/* <Image
-                src="/assets/dropoff.png"
-                alt="dropoff"
-                className="relative aspect-square w-16 object-contain"
-              /> */}
+              <Image
+                src='/images/dropoff.png'
+                alt='dropoff'
+                className='relative aspect-square object-contain'
+                width={74}
+                height={74}
+              />
               <p className='mt-2 text-xs font-medium'>Dropoff</p>
             </Link>
           </div>
