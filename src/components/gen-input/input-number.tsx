@@ -21,19 +21,21 @@ type InputNumberProps = React.InputHTMLAttributes<HTMLInputElement> &
 
 const inputVariants = cva(
   cn(
-    'flex w-full rounded-lg border',
+    'flex w-full rounded- border',
     'focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus:shadow-none',
-    'focus-visible:ring-primary/80 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus:outline-none focus-visible:ring',
+    'focus-visible:ring-brand-primary focus-visible:ring-offset-brand-primary focus:outline-none focus-visible:ring',
   ),
   {
     variants: {
       variant: {
-        primary: cn('border-[#EBEBEB] bg-white focus:border-[#E3E3E3]'),
+        primary: cn(
+          'border bg-input-bg border-input-border/70 placeholder:text-sm placeholder:font-normal placeholder:text-ring rounded-xl',
+        ),
       },
 
       size_variant: {
         sm: 'px-2 py-1 text-base',
-        base: 'p-4 text-base',
+        base: 'px-4 py-6 text-base',
       },
     },
 
@@ -66,7 +68,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     return (
       <div
         className={cn(
-          'flex flex-col gap-2 items-start w-full',
+          'flex flex-col gap-1 items-start w-full',
           containerClassName,
         )}
       >

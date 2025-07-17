@@ -7,7 +7,7 @@ declare module 'next-auth' {
     user: UserType;
     tokens: {
       accessToken: string;
-      refreshToken: string;
+      accessTokenExpires: string;
     };
     sessionUpdated?: boolean;
   }
@@ -16,7 +16,7 @@ declare module 'next-auth' {
     user: UserType;
     tokens: {
       accessToken: string;
-      refreshToken: string;
+      accessTokenExpires: string;
     };
     sessionUpdated?: boolean;
   }
@@ -28,7 +28,7 @@ declare module 'next-auth/jwt' {
       user: UserType;
       tokens: {
         accessToken: string;
-        refreshToken: string;
+        accessTokenExpires: string;
       };
       sessionUpdated?: boolean;
     };

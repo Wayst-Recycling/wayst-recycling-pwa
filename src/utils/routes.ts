@@ -5,7 +5,11 @@ export const appRoutes = {
     forgotPassword: '/forgot-password',
   },
   home: '/',
-  schedule: '/schedule',
+  schedule: {
+    root: '/schedule',
+    pickup: '/schedule/pickup',
+    dropoff: '/schedule/dropoff',
+  },
   history: '/history',
   settings: '/settings',
 };

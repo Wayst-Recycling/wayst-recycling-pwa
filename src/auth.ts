@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { decode } from 'jsonwebtoken';
 import { NextAuthOptions, Session, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -52,7 +54,7 @@ export const authOptions: NextAuthOptions = {
             user: loginResponse.data.user,
             tokens: {
               accessToken: loginResponse.data.tokens.accessToken,
-              refreshToken: loginResponse.data.tokens.refreshToken,
+              accessTokenExpires: loginResponse.data.tokens.accessTokenExpires,
             },
           } as User;
 
@@ -107,19 +109,49 @@ export const authOptions: NextAuthOptions = {
   secret: `${process.env.NEXTAUTH_SECRET}`,
 
   callbacks: {
-    jwt: async ({ trigger, token, session, user }) => {
+    jwt: async ({ token, user, trigger, session, account }) => {
+      // initial signin
+      if (account && user) {
+        token.data = user;
+
+        const decodedAccessToken = decode(user.tokens.accessToken);
+
+        if (decodedAccessToken && typeof decodedAccessToken !== 'string') {
+          const accessTokenTimeDiff =
+            dayjs((decodedAccessToken.exp || 0) * 1000).diff(
+              dayjs((decodedAccessToken.iat || 0) * 1000),
+              'minutes',
+            ) - 10;
+
+          token.data.tokens.accessTokenExpires = dayjs()
+            .add(accessTokenTimeDiff, 'minutes')
+            .toISOString();
+        }
+
+        // const decodedRefreshToken = decode(user.tokens.refreshToken);
+
+        // if (decodedRefreshToken && typeof decodedRefreshToken !== 'string') {
+        //     const refreshTokenTimeDiff =
+        //         dayjs((decodedRefreshToken.exp || 0) * 1000).diff(
+        //             dayjs((decodedRefreshToken.iat || 0) * 1000),
+        //             'minutes'
+        //         ) - 10;
+
+        //     token.data.tokens.refreshTokenExpires = dayjs()
+        //         .add(refreshTokenTimeDiff, 'minutes')
+        //         .toISOString();
+        // }
+
+        return token;
+      }
+
       if (trigger === 'update') {
         const updatedToken = token;
-        updatedToken.data = session;
+        updatedToken.data = { ...session, user: session.user };
         return updatedToken;
       }
 
-      // console.log('token: ', token)
-      // console.log('user: ', user)
-
-      if (user) {
-        token.data = user;
-      }
+      // user && (token.data = user);
       return token;
     },
     session: async ({ session, token }) => {

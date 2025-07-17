@@ -21,7 +21,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         <FooterLink
           icon={IoCalendarOutline}
           text='Schedule'
-          link={appRoutes.schedule}
+          link={appRoutes.schedule.root}
         />
         <FooterLink icon={FiFileText} text='History' link={appRoutes.history} />
         <FooterLink icon={FaUser} text='Settings' link={appRoutes.settings} />

@@ -146,3 +146,18 @@
 
 @layer base {
 }
+
+/* For Webkit browsers (Chrome, Safari) */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.hide-scroll {
+  scrollbar-width: none;
+}
+
+/* For IE and Edge */
+.hide-scroll {
+  -ms-overflow-style: none;
+}
