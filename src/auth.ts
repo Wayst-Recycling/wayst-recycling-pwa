@@ -1,7 +1,102 @@
-import NextAuth from 'next-auth';
+import dayjs from 'dayjs';
+import { decode } from 'jsonwebtoken';
+import { NextAuthOptions, Session, User } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
-  providers: [],
+import logger from '@/lib/logger';
+
+import { BASE_URL, POST_METHOD } from '@/actions/action.constants';
+import {
+  INetworkErrorResponse,
+  INetworkSuccessResponse,
+} from '@/actions/action.types';
+import { LOGIN_PATH } from '@/actions/auth/auth-constants.server';
+
+export const authOptions: NextAuthOptions = {
+  providers: [
+    CredentialsProvider({
+      name: 'Login Form',
+      id: 'login',
+      credentials: {
+        email: {
+          type: 'string',
+        },
+        password: {
+          type: 'string',
+        },
+      },
+      authorize: async (credentials) => {
+        try {
+          const payload = {
+            email: credentials?.email || '',
+            password: credentials?.password || '',
+          };
+
+          const response = await fetch(`${BASE_URL}${LOGIN_PATH}`, {
+            method: POST_METHOD,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            const error: INetworkErrorResponse = data;
+
+            throw new Error(error.errorMessage);
+          }
+
+          const loginResponse = data as INetworkSuccessResponse<User>;
+
+          const user = {
+            user: loginResponse.data.user,
+            tokens: {
+              accessToken: loginResponse.data.tokens.accessToken,
+              accessTokenExpires: loginResponse.data.tokens.accessTokenExpires,
+            },
+          } as User;
+
+          return user;
+        } catch (error) {
+          logger(error);
+          if (error instanceof Error) {
+            throw new Error(error.message);
+          }
+        }
+
+        return null;
+      },
+    }),
+
+    CredentialsProvider({
+      name: 'Update Session',
+      id: 'update-session',
+      credentials: {
+        session: {
+          type: 'string',
+        },
+      },
+      authorize: async (credentials) => {
+        try {
+          const updateSession: Session = JSON.parse(
+            credentials?.session || '{}',
+          );
+
+          updateSession.sessionUpdated = true;
+          return updateSession as unknown as User;
+        } catch (error) {
+          logger(error);
+          if (error instanceof Error) {
+            throw new Error(error.message);
+          }
+        }
+
+        return null;
+      },
+    }),
+  ],
   pages: {
     error: '/login',
     signIn: '/login',
@@ -9,39 +104,62 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
   },
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60 * 24 * 5,
+    maxAge: 60 * 60 * 24 * 30,
   },
-  secret: `${process.env.AUTH_SECRET}`,
+  secret: `${process.env.NEXTAUTH_SECRET}`,
 
   callbacks: {
-    jwt: async ({ trigger, token, session, user }) => {
+    jwt: async ({ token, user, trigger, session, account }) => {
+      // initial signin
+      if (account && user) {
+        token.data = user;
+
+        const decodedAccessToken = decode(user.tokens.accessToken);
+
+        if (decodedAccessToken && typeof decodedAccessToken !== 'string') {
+          const accessTokenTimeDiff =
+            dayjs((decodedAccessToken.exp || 0) * 1000).diff(
+              dayjs((decodedAccessToken.iat || 0) * 1000),
+              'minutes',
+            ) - 10;
+
+          token.data.tokens.accessTokenExpires = dayjs()
+            .add(accessTokenTimeDiff, 'minutes')
+            .toISOString();
+        }
+
+        // const decodedRefreshToken = decode(user.tokens.refreshToken);
+
+        // if (decodedRefreshToken && typeof decodedRefreshToken !== 'string') {
+        //     const refreshTokenTimeDiff =
+        //         dayjs((decodedRefreshToken.exp || 0) * 1000).diff(
+        //             dayjs((decodedRefreshToken.iat || 0) * 1000),
+        //             'minutes'
+        //         ) - 10;
+
+        //     token.data.tokens.refreshTokenExpires = dayjs()
+        //         .add(refreshTokenTimeDiff, 'minutes')
+        //         .toISOString();
+        // }
+
+        return token;
+      }
+
       if (trigger === 'update') {
         const updatedToken = token;
-        updatedToken.data = session;
+        updatedToken.data = { ...session, user: session.user };
         return updatedToken;
       }
 
-      if (user) {
-        token.data = user;
-      }
+      // user && (token.data = user);
       return token;
     },
-
     session: async ({ session, token }) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      session.token = token.data.token;
+      session.tokens = token.data.tokens;
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      session.admin = token.data.admin;
+      session.user = token.data.user;
       return session;
     },
-
-    authorized: async ({ auth }) => {
-      return !!auth;
-    },
-
     redirect({ url, baseUrl }) {
       // Allows relative callback URLs
       if (url.startsWith('/')) return `${baseUrl}${url}`;
@@ -50,4 +168,4 @@ export const { handlers, signIn, signOut, auth, unstable_update } = NextAuth({
       return baseUrl;
     },
   },
-});
+};

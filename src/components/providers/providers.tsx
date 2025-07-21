@@ -29,13 +29,13 @@ const Providers = ({
       <Provider store={storeRef.current}>
         <AppProgressProvider
           height='4px'
-          color='#fff232'
+          color='#036937'
           options={{ showSpinner: false }}
           shallowRouting
         >
           <PersistGate loading={null} persistor={persistorRef.current} />
           {children}
-          <Toaster />
+          <Toaster richColors duration={3000} />
         </AppProgressProvider>
       </Provider>
     </SessionProvider>

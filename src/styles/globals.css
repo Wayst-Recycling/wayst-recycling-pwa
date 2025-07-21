@@ -7,7 +7,11 @@
 
 @theme {
   --color-dark: #222222;
-
+  --color-white: white;
+  --color-green-text: #012915;
+  --color-input-border: #dbdbdb;
+  --color-brand-primary: #036937;
+  --color-brand-secondary: #f2f6f4;
   --animate-flicker: flicker 3s linear infinite;
   --animate-shimmer: shimmer 1.3s linear infinite;
 
@@ -141,4 +145,19 @@
 }
 
 @layer base {
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox */
+.hide-scroll {
+  scrollbar-width: none;
+}
+
+/* For IE and Edge */
+.hide-scroll {
+  -ms-overflow-style: none;
 }

@@ -1,4 +1,5 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
+import { signOut } from 'next-auth/react';
 import { toast } from 'sonner';
 
 import logger from '@/lib/logger';
@@ -8,31 +9,31 @@ import {
   AUTHENTICATED_GLOBAL_API_REDUCER_PATH,
 } from '@/actions/action.constants';
 import { INetworkErrorResponse } from '@/actions/action.types';
-import { signOutAction } from '@/actions/auth/auth-actions.server';
+// import { signOutAction } from '@/actions/auth/auth-actions.server';
 import { authenticatedServerAction } from '@/actions/server-action';
 import { AppError } from '@/utils/error';
 
-const SignOutManager = {
-  isSigningOut: false,
-  signOutPromise: null as Promise<void> | null,
+// const SignOutManager = {
+//   isSigningOut: false,
+//   signOutPromise: null as Promise<void> | null,
 
-  async signOut() {
-    if (this.isSigningOut) {
-      // If already signing out, return the existing promise
-      return this.signOutPromise;
-    }
+//   async signOut() {
+//     if (this.isSigningOut) {
+//       // If already signing out, return the existing promise
+//       return this.signOutPromise;
+//     }
 
-    this.isSigningOut = true;
-    this.signOutPromise = signOutAction().finally(() => {
-      toast.error('Session expired');
+//     this.isSigningOut = true;
+//     this.signOutPromise = signOutAction().finally(() => {
+//       toast.error('Session expired');
 
-      this.isSigningOut = false;
-      this.signOutPromise = null;
-    });
+//       this.isSigningOut = false;
+//       this.signOutPromise = null;
+//     });
 
-    return this.signOutPromise;
-  },
-};
+//     return this.signOutPromise;
+//   },
+// };
 
 const baseQuery =
   (): BaseQueryFn<
@@ -86,7 +87,9 @@ const baseQuery =
 
       if (error instanceof AppError) {
         if (error.statusCode === 401) {
-          SignOutManager.signOut();
+          signOut({ callbackUrl: '/' }).then(() => {
+            toast.error('Session expired, please login again');
+          });
           logger(error);
         }
         return {
@@ -101,7 +104,8 @@ const baseQuery =
         error: {
           status: null,
           message:
-            (error as INetworkErrorResponse).message || 'Something went wrong',
+            (error as INetworkErrorResponse).errorMessage ||
+            'Something went wrong',
         },
       };
     }

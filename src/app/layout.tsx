@@ -1,11 +1,14 @@
 import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { getServerSession } from 'next-auth/next';
 import * as React from 'react';
 
 import '@/styles/globals.css';
 
 import Providers from '@/components/providers/providers';
 
-import { auth } from '@/auth';
+import { appMaxWidth } from '@/app/_utils/helpers';
+import { authOptions } from '@/auth';
 import { siteConfig } from '@/constant/config';
 
 export const metadata: Metadata = {
@@ -17,9 +20,9 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   robots: { index: true, follow: true },
   icons: {
-    icon: '/favicon/favicon.ico',
-    shortcut: '/favicon/favicon-16x16.png',
-    apple: '/favicon/apple-touch-icon.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -39,16 +42,22 @@ export const metadata: Metadata = {
   },
 };
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true,
+});
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   return (
-    <html>
-      <body>
+    <html className={`${inter.className}`}>
+      <body style={{ maxWidth: appMaxWidth }} className='mx-auto'>
         <Providers session={session}>{children}</Providers>
       </body>
     </html>

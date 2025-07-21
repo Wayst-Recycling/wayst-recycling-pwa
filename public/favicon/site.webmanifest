@@ -1,10 +1,10 @@
 {
-  "name": "Product Studio",
-  "short_name": "Product Studio",
+  "name": "Wayst Recyclin",
+  "short_name": "Wayst",
   "icons": [
     {
-      "src": "/android-chrome-144x144.png",
-      "sizes": "144x144",
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
       "type": "image/png"
     }
   ],

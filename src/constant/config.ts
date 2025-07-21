@@ -1,5 +1,6 @@
 export const siteConfig = {
-  title: 'Product Studio Nextjs Template',
-  description: 'Product Studio Nextjs Template',
-  url: 'https://theproductstudiohq.com',
+  title: 'Wayst Recycling',
+  description:
+    'Turn your waste into rewards—schedule a pickup, drop off recyclables, and earn cUSD instantly',
+  url: 'https://app.waystrecycling.com',
 };

@@ -73,7 +73,8 @@ const baseQuery =
         error: {
           status: null,
           message:
-            (error as INetworkErrorResponse).message || 'Something went wrong',
+            (error as INetworkErrorResponse).errorMessage ||
+            'Something went wrong',
         },
       };
     }

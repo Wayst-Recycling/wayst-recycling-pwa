@@ -1,7 +1,6 @@
 export type INetworkErrorResponse = {
-  status: number;
-  message: string;
-  data: null;
+  statusCode: number;
+  errorMessage: string;
 };
 
 export type INetworkSuccessResponse<T> = {

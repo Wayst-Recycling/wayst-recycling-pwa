@@ -15,7 +15,7 @@ const InputError = ({ error, isError }: InputErrorProps) => {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 100 }}
           transition={{ ease: 'easeOut', duration: 0.5 }}
-          className='text-xs font-semibold text-destructive'
+          className='text-xs font-semibold text-red-500'
         >
           {error}
         </motion.div>

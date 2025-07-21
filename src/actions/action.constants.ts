@@ -1,4 +1,4 @@
-export const BASE_URL = process.env.API_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // METHODS CONSTANTS START
 export const GET_METHOD = 'GET' as const;

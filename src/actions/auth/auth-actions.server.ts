@@ -1,28 +1,53 @@
-'use server';
-import { AuthError } from 'next-auth';
+import { POST_METHOD } from '@/actions/action.constants';
+import { INetworkSuccessResponse } from '@/actions/action.types';
+import {
+  REGISTER_PATH,
+  RESEND_VERIFICATION_LINK_PATH,
+  VERIFY_REGISTRATION_EMAIL_PATH,
+} from '@/actions/auth/auth-constants.server';
+import { RegisterUserInput } from '@/actions/auth/auth-types.server';
+import { unauthenticated_global_api } from '@/actions/unauthenticated-api';
 
-import { signIn, signOut } from '@/auth';
+const AuthAction = unauthenticated_global_api.injectEndpoints({
+  overrideExisting: true,
+  endpoints: (build) => ({
+    register: build.mutation<
+      INetworkSuccessResponse<unknown>,
+      RegisterUserInput
+    >({
+      query: (payload) => ({
+        url: REGISTER_PATH,
+        method: POST_METHOD,
+        data: payload,
+      }),
+    }),
 
-export async function signInAction(data: { email: string; password: string }) {
-  try {
-    const res = await signIn('login', { redirect: false, ...data });
+    resendOtp: build.mutation<
+      INetworkSuccessResponse<unknown>,
+      { email: string }
+    >({
+      query: (payload) => ({
+        url: RESEND_VERIFICATION_LINK_PATH,
+        method: POST_METHOD,
+        data: payload,
+      }),
+    }),
 
-    return res;
-  } catch (error) {
-    if (error instanceof AuthError) {
-      return {
-        // TODO: HANDLE THIS ERROR
-        // error: error.cause?.err?.message,
-        error: 'Handle this error',
-      };
-    }
+    verifyEmail: build.mutation<
+      INetworkSuccessResponse<unknown>,
+      { email: string; token: string; dappUser: boolean }
+    >({
+      query: (payload) => ({
+        url: VERIFY_REGISTRATION_EMAIL_PATH,
+        method: POST_METHOD,
+        data: payload,
+      }),
+    }),
+  }),
+});
 
-    return {
-      error: 'Something went wrong',
-    };
-  }
-}
-
-export async function signOutAction() {
-  await signOut({ redirectTo: '/login', redirect: true });
-}
+export const {
+  useRegisterMutation,
+  useResendOtpMutation,
+  useVerifyEmailMutation,
+} = AuthAction;
