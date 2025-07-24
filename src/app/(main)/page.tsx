@@ -2,6 +2,7 @@
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ import { currencies } from '@/app/(main)/_utils/constants';
 import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { ROBO_URL } from '@/utils';
 import { formatcUsd } from '@/utils/format';
+import { appRoutes } from '@/utils/routes';
 
 const HomePage = () => {
   const { data, isLoading } = useGetWalletQuery();
@@ -43,6 +45,8 @@ const HomePage = () => {
       return 0;
     }
   };
+
+  const router = useRouter();
 
   return (
     <div className='flex flex-col items-center justify-center px-5'>
@@ -79,6 +83,7 @@ const HomePage = () => {
           <Button
             variant='secondary'
             className='flex items-center space-x-0.5 px-12'
+            onClick={() => router.push(appRoutes.withdraw)}
           >
             <ArrowUpRight className='text-brand-primary w-5 aspect-square' />
             <p>Withdraw</p>
