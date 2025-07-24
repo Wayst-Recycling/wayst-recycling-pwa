@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    apple: '/favicon/apple-touch-icon-180x180.png',
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
