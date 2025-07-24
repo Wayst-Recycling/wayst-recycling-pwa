@@ -1,8 +1,11 @@
 'use server';
 
+import { getServerSession } from 'next-auth';
+
 import logger from '@/lib/logger';
 
 import { INetworkErrorResponse } from '@/actions/action.types';
+import { authOptions } from '@/auth';
 import { AppError } from '@/utils/error';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -40,10 +43,10 @@ async function executeServerAction({
     // Add authentication if required
     if (withAuth) {
       // TODO: HANDLE THIS WHEN AUTH IS IMPLEMENTED
-      // const session = await auth();
+      const session = await getServerSession(authOptions);
       options.headers = {
         ...options.headers,
-        // Authorization: `Bearer ${session?.token.access_token}`,
+        Authorization: `Bearer ${session?.tokens.accessToken}`,
       };
     }
 

@@ -15,18 +15,26 @@ const FormatBalance: React.FC<NumberProps> = ({
   decimalClassName,
   isLoading,
 }) => {
-  const wholePart = value && Math.floor(value);
+  const hasValue = value !== undefined;
+  const wholePart = hasValue ? Math.floor(value) : 0;
   const decimalPart =
-    value && value % 1 !== 0 ? value.toString().split('.')[1] : null;
+    hasValue && value % 1 !== 0 ? value.toString().split('.')[1] : null;
 
   return (
     <div>
-      {!isLoading && value && (
+      {!isLoading && hasValue && (
         <div>
           <span className={wholeNumberClassName}>{wholePart}</span>
           {decimalPart && (
             <span className={decimalClassName}>.{decimalPart}</span>
           )}
+        </div>
+      )}
+
+      {!isLoading && !hasValue && (
+        <div>
+          <span className={wholeNumberClassName}>0</span>
+          <span className={decimalClassName}>.000</span>
         </div>
       )}
 
