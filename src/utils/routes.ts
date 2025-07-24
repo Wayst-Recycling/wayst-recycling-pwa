@@ -12,4 +12,5 @@ export const appRoutes = {
   },
   history: '/history',
   profile: '/profile',
+  withdraw: '/withdraw',
 };

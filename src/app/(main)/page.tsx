@@ -2,23 +2,58 @@
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
 
+import { useAppSelector } from '@/store';
+
+import { useGetConfigurationQuery } from '@/actions/configuration/configuration-api.action';
+import { useGetWalletQuery } from '@/actions/wallet/wallet-action.server';
 import CurrencySelect from '@/app/(main)/_components/currency-select';
 import FormatBalance from '@/app/(main)/_components/format-balance';
 import { TotalEarningsTooltip } from '@/app/(main)/_components/total-earnings-tooltip';
 import TransactionCard from '@/app/(main)/_components/transaction-card';
+import { currencies } from '@/app/(main)/_utils/constants';
+import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { ROBO_URL } from '@/utils';
 import { formatcUsd } from '@/utils/format';
+import { appRoutes } from '@/utils/routes';
 
 const HomePage = () => {
+  const { data, isLoading } = useGetWalletQuery();
+  const { data: sessionData } = useSession();
+
+  const { activeCurrency } = useAppSelector(
+    (state) => state[CURRENCY_REDUCER_PATH],
+  );
+
+  const { data: configurationResponse } = useGetConfigurationQuery();
+
+  const currency = currencies.find((x) => x.id === activeCurrency);
+
+  const amount = () => {
+    if (currency && currency.index && data && data.data.CELO) {
+      return parseFloat(formatcUsd(parseFloat(data.data.CELO as string)));
+    } else if (currency && currency.exchange && configurationResponse && data) {
+      const rate =
+        configurationResponse.data.find((x) => x.type === currency.exchange)
+          ?.value ?? 0;
+      return parseFloat(formatcUsd(Number(rate) * parseFloat(data.data.CELO)));
+    } else {
+      return 0;
+    }
+  };
+
+  const router = useRouter();
+
   return (
     <div className='flex flex-col items-center justify-center px-5'>
       <div className='mx-auto mt-5 flex w-full flex-col pb-20'>
         <div className='flex w-full items-center justify-start space-x-2'>
           <Image
-            src={`${ROBO_URL}/ss`}
+            src={`${ROBO_URL}/${sessionData?.user.firstName}`}
             alt='avatar'
             width={40}
             height={40}
@@ -33,11 +68,11 @@ const HomePage = () => {
           <CurrencySelect />
 
           <div className='space-y-2'>
-            <div className='flex items-end space-x-1'>
-              <p className='text-xs'>cUSD</p>
+            <div className='flex items-end justify-center space-x-1'>
+              <p className='text-xs'>{currency?.title}</p>
               <FormatBalance
-                isLoading={false}
-                value={Number(formatcUsd(78.765))}
+                isLoading={isLoading}
+                value={amount()}
                 decimalClassName='text-xl font-semibold'
                 wholeNumberClassName='text-4xl font-semibold'
               />
@@ -48,6 +83,7 @@ const HomePage = () => {
           <Button
             variant='secondary'
             className='flex items-center space-x-0.5 px-12'
+            onClick={() => router.push(appRoutes.withdraw)}
           >
             <ArrowUpRight className='text-brand-primary w-5 aspect-square' />
             <p>Withdraw</p>
