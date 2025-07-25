@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 
@@ -106,8 +107,9 @@ const HomePage = () => {
               />
               <p className='mt-2 text-xs font-medium'>Pickup</p>
             </Link>
-            <Link
-              href='/'
+            <button
+              onClick={() => toast.info('Coming Soon')}
+              style={{ filter: 'grayscale(100%)' }}
               className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
               <Image
@@ -118,7 +120,7 @@ const HomePage = () => {
                 height={74}
               />
               <p className='mt-2 text-xs font-medium'>Daily Claim</p>
-            </Link>
+            </button>
             <Link
               href={appRoutes.schedule.dropoff}
               className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
