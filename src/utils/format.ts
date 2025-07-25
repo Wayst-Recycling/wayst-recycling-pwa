@@ -16,11 +16,19 @@ export function formatAmount(amount: string, currency?: '₦' | '$') {
   // Remove any non-digit characters
   const cleanAmount = removeNonDigit(amount);
 
-  return `${currency || ''}${
+  return `${currency ? `${currency} ` : ''}${
     cleanAmount
       ? parseFloat(cleanAmount).toLocaleString('en-us', {
           maximumFractionDigits: 2,
         })
       : ''
   }`;
+}
+
+export function toTitleCase(str: string) {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

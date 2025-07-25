@@ -24,71 +24,42 @@ export const scheduleValidationSchema = object().shape({
   [SCHEDULE_MATERIAL_KEY]: string().required('Kindly select a material'),
   [SCHEDULE_CONTAINER_AMOUNT_KEY]: string()
     .required('Number of bags is required')
-    .test(
-      'Check if number is valid',
-      'Please provide a valid number',
-      (value, context) => {
-        if (!value) return context.createError();
-        const cleanAmount = value.replace(/\D/g, '');
-
-        if (!cleanAmount.length) {
-          return context.createError();
-        }
-
-        const amount = parseInt(cleanAmount, 10);
-
-        if (amount < 1) {
-          return context.createError({
-            message: 'Container amount must be at least 1',
-          });
-        }
-
-        if (amount > 50) {
-          return context.createError({
-            message: 'Container amount cannot exceed 50',
-          });
-        }
-
-        const isValid = /^[0-9]+$/.test(cleanAmount);
-
-        return isValid || context.createError();
-      },
-    ),
+    .matches(/^\d+(\.\d+)?$/, `Enter a valid number`)
+    .test('greater-than-zero', `Value must be greater than 0`, (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return !isNaN(num) && num > 0;
+    })
+    .test('less-than-51', `Value must not exceed 50`, (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return !isNaN(num) && num <= 50;
+    }),
   [SCHEDULE_MATERIAL_AMOUNT_KEY]: string()
     .required('Number of plastics is required')
-    .test(
-      'Check if number is valid',
-      'Please provide a valid number',
-      (value, context) => {
-        if (!value) return context.createError();
-        const cleanAmount = value.replace(/\D/g, '');
-
-        if (!cleanAmount.length) {
-          return context.createError();
-        }
-
-        const amount = parseInt(cleanAmount, 10);
-
-        if (amount < 50) {
-          return context.createError({
-            message: 'Material amount must be at least 50',
-          });
-        }
-
-        if (amount > 10000) {
-          return context.createError({
-            message: 'Material amount cannot exceed 10,000',
-          });
-        }
-
-        const isValid = /^[0-9]+$/.test(cleanAmount);
-
-        return isValid || context.createError();
-      },
-    ),
+    .matches(/^\d+(\.\d+)?$/, `Enter a valid number`)
+    .test('greater-than-fifty', `Value must be greater than 50`, (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return !isNaN(num) && num >= 50;
+    })
+    .test('less-than-10000', `Value must not exceed 10,000`, (value) => {
+      if (!value) return true;
+      const num = parseFloat(value);
+      return !isNaN(num) && num <= 10000;
+    }),
   [SCHEDULE_ADDRESS_KEY]: string().required('Kindly input a valid address'),
-  [SCHEDULE_REGION_KEY]: string().required('Kindly select a valid pickup date'),
-  [SCHEDULE_CITY_KEY]: string().required(),
+  [SCHEDULE_REGION_KEY]: string().when(SCHEDULE_CATEGORY_KEY, {
+    is: (val: string) => val === 'pickup',
+    then: (schema) => schema.required('Kindly select a valid pickup date'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+
+  [SCHEDULE_CITY_KEY]: string().when(SCHEDULE_CATEGORY_KEY, {
+    is: (val: string) => val === 'pickup',
+    then: (schema) => schema.required('City is required'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   [SCHEDULE_CATEGORY_KEY]: string().required(),
 });
 

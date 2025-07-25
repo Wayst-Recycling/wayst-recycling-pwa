@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
-import { redirect } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { useScheduleMutation } from '@/actions/schedule/schedule-action.server';
 import {
+  SCHEDULE_CATEGORY_KEY,
   SCHEDULE_CONTAINER_AMOUNT_KEY,
   SCHEDULE_MATERIAL_AMOUNT_KEY,
   scheduleInitialValues,
@@ -15,10 +16,18 @@ import { appRoutes } from '@/utils/routes';
 export const useSchedule = () => {
   const [schedule, { isLoading }] = useScheduleMutation();
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   const formik = useFormik({
-    initialValues: scheduleInitialValues,
+    initialValues: {
+      ...scheduleInitialValues,
+      [SCHEDULE_CATEGORY_KEY]:
+        pathname === appRoutes.schedule.dropoff ? 'dropoff' : 'pickup',
+    },
     validationSchema: scheduleValidationSchema,
-    onSubmit: (values) => {
+    enableReinitialize: true,
+    onSubmit: async (values) => {
       const newValues = {
         ...values,
         [SCHEDULE_MATERIAL_AMOUNT_KEY]: Number(
@@ -29,10 +38,10 @@ export const useSchedule = () => {
         ),
       };
       try {
-        schedule(newValues).unwrap();
+        await schedule(newValues).unwrap();
         formik.resetForm();
         toast.success('Schedule successful');
-        redirect(appRoutes.home);
+        router.push(appRoutes.home);
       } catch {
         toast.error('Something went wrong');
       }
@@ -46,5 +55,13 @@ export const useSchedule = () => {
     };
   }
 
-  return { isLoading, getInputProps, formik };
+  function getSelectProps(id: keyof typeof formik.values) {
+    return {
+      ...formik.getFieldProps(id),
+      ...formik.getFieldMeta(id),
+      ...formik.getFieldHelpers(id),
+    };
+  }
+
+  return { isLoading, getInputProps, getSelectProps, formik };
 };
