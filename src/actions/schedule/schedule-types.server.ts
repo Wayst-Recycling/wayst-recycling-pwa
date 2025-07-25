@@ -17,3 +17,14 @@ export type ISchedule = {
   [SCHEDULE_CATEGORY_KEY]: string;
   [SCHEDULE_REGION_KEY]: string;
 };
+
+export type RLocation = {
+  id: string;
+  address: string;
+  region: string;
+  city: string;
+  country: string;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+};

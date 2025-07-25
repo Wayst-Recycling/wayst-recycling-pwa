@@ -94,7 +94,7 @@ const HomePage = () => {
           <p className='text-xl font-semibold'>Quick Actions</p>
           <div className='mt-3 grid grid-cols-3 gap-3'>
             <Link
-              href='/'
+              href={appRoutes.schedule.pickup}
               className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
               <Image
@@ -120,7 +120,7 @@ const HomePage = () => {
               <p className='mt-2 text-xs font-medium'>Daily Claim</p>
             </Link>
             <Link
-              href='/'
+              href={appRoutes.schedule.dropoff}
               className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
               <Image

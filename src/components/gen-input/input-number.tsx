@@ -57,7 +57,6 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       containerClassName,
       variant,
       size_variant,
-      initialValue,
       ...rest
     },
     ref,
@@ -103,7 +102,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           inputMode='numeric'
           customInput={Input}
           ref={ref}
-          defaultValue={initialValue}
+          value={rest.value}
           className={cn(inputVariants({ variant, size_variant, className }))}
         />
 
