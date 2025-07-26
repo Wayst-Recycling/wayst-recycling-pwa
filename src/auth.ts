@@ -10,7 +10,7 @@ import {
   INetworkErrorResponse,
   INetworkSuccessResponse,
 } from '@/actions/action.types';
-import { LOGIN_PATH } from '@/actions/auth/auth-constants.server';
+import { LOGIN_PATH } from '@/actions/auth/auth-api.constants';
 
 export const authOptions: NextAuthOptions = {
   providers: [

@@ -26,7 +26,7 @@ const FooterLink = ({
         index && pathname === link && 'text-[#036937]',
       )}
     >
-      <Icon className='aspect-square w-4' />
+      <Icon className='aspect-square w-6 h-6' />
       <p className='text-xs'>{text}</p>
     </Link>
   );

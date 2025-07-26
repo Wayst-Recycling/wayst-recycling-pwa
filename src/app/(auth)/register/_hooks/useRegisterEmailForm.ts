@@ -3,7 +3,7 @@ import { object, string } from 'yup';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 
-import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-constants.server';
+import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-api.constants';
 import { REGISTER_REDUCER_PATH } from '@/slices/constants';
 import {
   updateRegisterStage,

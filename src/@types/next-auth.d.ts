@@ -1,6 +1,6 @@
 import { DefaultJWT } from 'next-auth/jwt';
 
-import { UserType } from '@/actions/auth/auth-types.server';
+import { UserType } from '@/actions/auth/auth-api.types';
 
 declare module 'next-auth' {
   interface Session {
