@@ -4,7 +4,7 @@ import { authenticated_global_api } from '@/actions/authenticated-api';
 import { GET_CONFIGURATION_PATH } from '@/actions/configuration/configuration-api.constants';
 import { RConfiguration } from '@/actions/configuration/configuration-api.types';
 
-const ConfigurationAction = authenticated_global_api.injectEndpoints({
+const ConfigurationApi = authenticated_global_api.injectEndpoints({
   overrideExisting: true,
   endpoints: (build) => ({
     getConfiguration: build.query<
@@ -19,4 +19,4 @@ const ConfigurationAction = authenticated_global_api.injectEndpoints({
   }),
 });
 
-export const { useGetConfigurationQuery } = ConfigurationAction;
+export const { useGetConfigurationQuery } = ConfigurationApi;

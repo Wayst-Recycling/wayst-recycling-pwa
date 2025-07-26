@@ -9,8 +9,8 @@ import { useAppDispatch, useAppSelector } from '@/store';
 import {
   useResendOtpMutation,
   useVerifyEmailMutation,
-} from '@/actions/auth/auth-actions.server';
-import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.actions';
+import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-api.constants';
 import RegisterBioForm from '@/app/(auth)/register/_components/register-bio-form';
 import RegisterEmailForm from '@/app/(auth)/register/_components/register-email-form';
 import RegisterTokenPage from '@/app/(auth)/register/_components/register-token-page';

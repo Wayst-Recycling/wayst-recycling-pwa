@@ -28,3 +28,22 @@ export type RLocation = {
   updatedAt: string;
   deletedAt: string | null;
 };
+
+export type RSchedule = {
+  acceptedAt: string | null;
+  address: string;
+  amount: string;
+  cancelledAt: string | null;
+  category: string;
+  city: string;
+  containerAmount: number;
+  country: string | null;
+  createdAt: string;
+  id: string;
+  material: string;
+  materialAmount: number;
+  region: string;
+  scheduleDate: string | null;
+  status: string;
+  updatedAt: string;
+};

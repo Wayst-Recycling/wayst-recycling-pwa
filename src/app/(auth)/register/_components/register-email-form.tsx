@@ -5,7 +5,7 @@ import Logo from '@/components/assets/logo';
 import GenInput from '@/components/gen-input/gen-input';
 import { Button } from '@/components/ui/button';
 
-import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-constants.server';
+import { REGISTER_EMAIL_KEY } from '@/actions/auth/auth-api.constants';
 import { useRegisterEmailForm } from '@/app/(auth)/register/_hooks/useRegisterEmailForm';
 import { appRoutes } from '@/utils/routes';
 

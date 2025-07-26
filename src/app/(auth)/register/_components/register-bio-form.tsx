@@ -16,7 +16,7 @@ import {
   REGISTER_LAST_NAME_KEY,
   REGISTER_PASSWORD_KEY,
   REGISTER_PHONE_KEY,
-} from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.constants';
 import { useRegisterBioForm } from '@/app/(auth)/register/_hooks/useRegisterBioForm';
 import { updateRegisterStage } from '@/slices/register.slice';
 import { appRoutes } from '@/utils/routes';

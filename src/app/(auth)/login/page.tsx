@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import {
   LOGIN_EMAIL_KEY,
   LOGIN_PASSWORD_KEY,
-} from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.constants';
 import { useLoginForm } from '@/app/(auth)/login/_hooks/useLogin';
 import { appRoutes } from '@/utils/routes';
 

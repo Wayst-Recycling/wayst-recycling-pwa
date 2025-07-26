@@ -57,6 +57,10 @@ export default async function RootLayout({
 
   return (
     <html className={`${inter.className}`}>
+      <meta
+        name='viewport'
+        content='width=device-width, initial-scale=1.0, maximum-scale=1'
+      />
       <body style={{ maxWidth: appMaxWidth }} className='mx-auto'>
         <Providers session={session}>{children}</Providers>
       </body>

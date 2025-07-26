@@ -7,7 +7,7 @@ import {
   REGISTER_LAST_NAME_KEY,
   REGISTER_PASSWORD_KEY,
   REGISTER_PHONE_KEY,
-} from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.constants';
 
 import { REGISTER_REDUCER_PATH } from './constants';
 

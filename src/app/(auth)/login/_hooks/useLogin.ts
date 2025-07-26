@@ -8,7 +8,7 @@ import { object, string } from 'yup';
 import {
   LOGIN_EMAIL_KEY,
   LOGIN_PASSWORD_KEY,
-} from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.constants';
 import { handleErrors } from '@/utils/error';
 
 export const useLoginForm = () => {

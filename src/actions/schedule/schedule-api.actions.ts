@@ -7,10 +7,10 @@ import { authenticated_global_api } from '@/actions/authenticated-api';
 import {
   DROPOFF_LOCATION_PATH,
   SCHEDULE_PATH,
-} from '@/actions/schedule/schedule-constants.server';
-import { ISchedule, RLocation } from '@/actions/schedule/schedule-types.server';
+} from '@/actions/schedule/schedule-api.constants';
+import { ISchedule, RLocation } from '@/actions/schedule/schedule-api.types';
 
-const ScheduleAction = authenticated_global_api.injectEndpoints({
+const ScheduleApi = authenticated_global_api.injectEndpoints({
   overrideExisting: true,
   endpoints: (build) => ({
     schedule: build.mutation<INetworkSuccessResponse<unknown>, ISchedule>({
@@ -34,5 +34,4 @@ const ScheduleAction = authenticated_global_api.injectEndpoints({
   }),
 });
 
-export const { useScheduleMutation, useGetDropoffLocationsQuery } =
-  ScheduleAction;
+export const { useScheduleMutation, useGetDropoffLocationsQuery } = ScheduleApi;

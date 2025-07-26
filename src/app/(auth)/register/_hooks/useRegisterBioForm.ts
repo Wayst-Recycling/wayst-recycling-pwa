@@ -5,7 +5,7 @@ import { PASSWORD_REGEX } from '@/lib/utils';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 
-import { useRegisterMutation } from '@/actions/auth/auth-actions.server';
+import { useRegisterMutation } from '@/actions/auth/auth-api.actions';
 import {
   REGISTER_DIAL_CODE_KEY,
   REGISTER_EMAIL_KEY,
@@ -13,7 +13,7 @@ import {
   REGISTER_LAST_NAME_KEY,
   REGISTER_PASSWORD_KEY,
   REGISTER_PHONE_KEY,
-} from '@/actions/auth/auth-constants.server';
+} from '@/actions/auth/auth-api.constants';
 import { REGISTER_REDUCER_PATH } from '@/slices/constants';
 import {
   updateRegisterStage,

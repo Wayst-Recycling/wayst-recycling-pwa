@@ -9,7 +9,7 @@ import InputNumber from '@/components/gen-input/input-number';
 import GenSelect from '@/components/gen-select/gen-select';
 import { Button } from '@/components/ui/button';
 
-import { useGetDropoffLocationsQuery } from '@/actions/schedule/schedule-action.server';
+import { useGetDropoffLocationsQuery } from '@/actions/schedule/schedule-api.actions';
 import MaterialSelectItem from '@/app/(main)/schedule/_components/material-select-item';
 import { useSchedule } from '@/app/(main)/schedule/_hooks/useSchedule';
 import {

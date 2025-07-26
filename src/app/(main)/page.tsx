@@ -11,12 +11,12 @@ import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/store';
 
 import { useGetConfigurationQuery } from '@/actions/configuration/configuration-api.action';
-import { useGetWalletQuery } from '@/actions/wallet/wallet-action.server';
+import { useGetWalletQuery } from '@/actions/wallet/wallet-api.actions';
 import CurrencySelect from '@/app/(main)/_components/currency-select';
 import FormatBalance from '@/app/(main)/_components/format-balance';
 import { TotalEarningsTooltip } from '@/app/(main)/_components/total-earnings-tooltip';
-import TransactionCard from '@/app/(main)/_components/transaction-card';
 import { currencies } from '@/app/(main)/_utils/constants';
+import TransactionList from '@/app/(main)/history/_components/transaction-list';
 import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { ROBO_URL } from '@/utils';
 import { formatcUsd } from '@/utils/format';
@@ -147,28 +147,7 @@ const HomePage = () => {
               <ChevronRight size={12} />
             </Link>
           </div>
-          {/* {transactions &&
-            !isLoadingGetTransactions &&
-            transactions.data
-              .slice(0, 3)
-              .map((transaction) => ( */}
-          <TransactionCard transaction={{}} />
-          {/* ))} */}
-          {/* {!transactions && isLoadingGetTransactions && <Loader />} */}
-          {/* {!isLoadingGetTransactions && !transactions && (
-            <div className="mx-auto flex max-w-[60%] flex-col items-center text-center">
-              <img
-                className="mx-auto pt-10"
-                src="/assets/garbage.png"
-                alt="empty"
-              />
-              <p className="text-sm font-semibold">No transaction history</p>
-              <p className="text-xs text-gray-500">
-                Your data history is currently empty. Start recycling today to
-                see your impact.
-              </p>
-            </div>
-          )} */}
+          <TransactionList home />
         </div>
       </div>
     </div>

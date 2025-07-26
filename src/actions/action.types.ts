@@ -10,5 +10,11 @@ export type INetworkSuccessResponse<T> = {
 };
 
 export type IPaginatedResponse<T> = {
-  data: { count: number; page: number; totalPages: number; data: T[] };
+  data: {
+    total: number;
+    limit: number;
+    page: number;
+    totalPages: number;
+    data: T[];
+  };
 };
