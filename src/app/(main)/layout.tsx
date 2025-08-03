@@ -24,7 +24,11 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           link={appRoutes.schedule.root}
         />
         <FooterLink icon={FiFileText} text='History' link={appRoutes.history} />
-        <FooterLink icon={FaUser} text='Profile' link={appRoutes.profile} />
+        <FooterLink
+          icon={FaUser}
+          text='Profile'
+          link={appRoutes.settings.root}
+        />
       </div>
     </div>
   );

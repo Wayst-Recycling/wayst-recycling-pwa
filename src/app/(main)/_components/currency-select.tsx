@@ -2,12 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 import { FaCircleCheck } from 'react-icons/fa6';
 
+import { useDisclosure } from '@/hooks/useDisclosure';
+
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from '@/components/ui/drawer';
 
 import { useAppDispatch, useAppSelector } from '@/store';
@@ -16,10 +17,33 @@ import { currencies } from '@/app/(main)/_utils/constants';
 import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { updateActiveCurrency } from '@/slices/currency.slice';
 
+const Trigger = ({ onClick }: { onClick: () => void }) => {
+  const { activeCurrency } = useAppSelector(
+    (state) => state[CURRENCY_REDUCER_PATH],
+  );
+
+  const selectedCurrency = currencies.find((x) => x.id === activeCurrency);
+
+  return (
+    selectedCurrency && (
+      <button
+        className='flex items-center space-x-1 p-2 border rounded-lg shadow-sm'
+        onClick={onClick}
+      >
+        <Image src={selectedCurrency.img} alt='cusd' width={20} height={20} />
+        <p>
+          {selectedCurrency.description} - {selectedCurrency.title}
+        </p>
+      </button>
+    )
+  );
+};
 const CurrencySelect = () => {
   const { activeCurrency } = useAppSelector(
     (state) => state[CURRENCY_REDUCER_PATH],
   );
+
+  const currencySelectDrawerProps = useDisclosure();
 
   const dispatch = useAppDispatch();
 
@@ -27,20 +51,13 @@ const CurrencySelect = () => {
 
   return (
     <div>
-      <Drawer>
-        {selectedCurrency && (
-          <DrawerTrigger className='flex items-center space-x-1 p-2 border rounded-lg shadow-sm'>
-            <Image
-              src={selectedCurrency.img}
-              alt='cusd'
-              width={20}
-              height={20}
-            />
-            <p>
-              {selectedCurrency.description} - {selectedCurrency.title}
-            </p>
-          </DrawerTrigger>
-        )}
+      {selectedCurrency && (
+        <Trigger onClick={currencySelectDrawerProps.onOpen} />
+      )}
+      <Drawer
+        open={currencySelectDrawerProps.isOpen}
+        onOpenChange={currencySelectDrawerProps.onToggle}
+      >
         <DrawerContent className='px-5'>
           <DrawerHeader>
             <DrawerTitle className='text-start'>
@@ -50,7 +67,10 @@ const CurrencySelect = () => {
           {currencies.map((currency) => (
             <button
               key={currency.id}
-              onClick={() => dispatch(updateActiveCurrency(currency.id))}
+              onClick={() => {
+                dispatch(updateActiveCurrency(currency.id));
+                currencySelectDrawerProps.onClose();
+              }}
               className='flex justify-between py-3 border-b items-center text-start'
             >
               <div className='flex space-x-2 items-center'>

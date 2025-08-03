@@ -10,7 +10,7 @@ const WithdrawalPage = () => {
   const router = useRouter();
   const options = [
     {
-      icon: <Landmark className='text-brand-primary' />,
+      icon: <Landmark className='text-brand-primary w-6 h-6' />,
       active: true,
       title: 'Withdraw to Bank',
       description: 'Withdraw to your local bank account',
@@ -20,8 +20,8 @@ const WithdrawalPage = () => {
         <Image
           src='/images/crypto-withdraw.png'
           alt='crypto'
-          width={40}
-          height={40}
+          width={24}
+          height={24}
         />
       ),
       active: false,
@@ -54,11 +54,11 @@ const WithdrawalPage = () => {
                 <div>
                   <div className='text-sm flex items-center space-x-2'>
                     <p>{option.title}</p>
-                    {!option.active && (
+                    {/* {!option.active && (
                       <p className='text-xs text-[#9918E3] bg-[#9918E31A] p-1 rounded-xl'>
                         Coming soon
                       </p>
-                    )}
+                    )} */}
                   </div>
                   <p className='text-xs text-black/70 mt-0.5 text-wrap'>
                     {option.description}
