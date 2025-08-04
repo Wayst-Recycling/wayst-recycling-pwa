@@ -7,22 +7,22 @@ import NavigationHeader from '@/components/navigation-header';
 import { useAppDispatch, useAppSelector } from '@/store';
 
 import ForgotPaswordEmailForm from '@/app/(auth)/forgot-password/_components/forgot-password-email-form';
+import ForgotPasswordPage from '@/app/(auth)/forgot-password/_components/forgot-password-reset';
 import ForgotPasswordVerificationPage from '@/app/(auth)/forgot-password/_components/forgot-password-verification-page';
 import { FORGOT_PASSWORD_REDUCER_PATH } from '@/slices/constants';
 import { updateForgotPasswordStage } from '@/slices/forgot-password.slice';
 import { appRoutes } from '@/utils/routes';
 
 const ForgotPaswordPage = () => {
-  const { forgotPasswordValues } = useAppSelector(
+  const { stage } = useAppSelector(
     (state) => state[FORGOT_PASSWORD_REDUCER_PATH],
   );
-  const stage = forgotPasswordValues.stage;
   const dispatch = useAppDispatch();
   const router = useRouter();
   const handleBack = () => {
     if (stage === 'email') {
       router.push(appRoutes.auth.login);
-    } else if (stage === 'verification') {
+    } else if (stage === 'confirmation') {
       dispatch(updateForgotPasswordStage('email'));
     }
   };
@@ -30,7 +30,8 @@ const ForgotPaswordPage = () => {
     <div className='min-h-screen flex flex-col'>
       <NavigationHeader handleBack={handleBack} header='Forgot password' />
       {stage === 'email' && <ForgotPaswordEmailForm />}
-      {stage === 'verification' && <ForgotPasswordVerificationPage />}
+      {stage === 'confirmation' && <ForgotPasswordVerificationPage />}
+      {stage === 'password' && <ForgotPasswordPage />}
     </div>
   );
 };
