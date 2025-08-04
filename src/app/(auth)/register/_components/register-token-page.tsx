@@ -42,7 +42,6 @@ const RegisterTokenPage = () => {
         email: registerValues[REGISTER_EMAIL_KEY],
       }).unwrap();
       toast.success('Link resent');
-      router.replace(appRoutes.auth.register);
     } catch (err) {
       handleErrors(err);
     }

@@ -1,51 +1,52 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FORGOT_PASSWORD_REDUCER_PATH } from '@/slices/constants';
+import { FORGOT_PASSWORD_REDUCER_PATH } from './constants';
 
 const initialState = {
   forgotPasswordValues: {
-    stage: 'email',
+    email: '',
+    token: '',
   },
+  stage: 'email' as ForgotPasswordStageType,
 };
 
-export type forgotPasswordValuesType = {
-  stage: 'email' | 'verification';
+export type ForgotPasswordValuesType = {
+  email: string;
+  token: string;
 };
 
-type ForgotPasswordSliceState = {
-  forgotPasswordValues: forgotPasswordValuesType;
-};
+type ForgotPasswordStageType = 'email' | 'confirmation' | 'password';
 
 export const forgotPasswordSlice = createSlice({
   name: FORGOT_PASSWORD_REDUCER_PATH,
   initialState,
   reducers: {
-    updateForgotPasswordValues: (
+    updateForgotPassword: (
       state,
-      action: PayloadAction<Partial<ForgotPasswordSliceState>>,
+      action: PayloadAction<Partial<ForgotPasswordValuesType>>,
     ) => {
-      return {
-        ...state,
+      state.forgotPasswordValues = {
+        ...state.forgotPasswordValues,
         ...action.payload,
       };
     },
 
     updateForgotPasswordStage: (
       state,
-      action: PayloadAction<forgotPasswordValuesType['stage']>,
+      action: PayloadAction<Partial<ForgotPasswordStageType>>,
     ) => {
-      state.forgotPasswordValues.stage = action.payload;
+      state.stage = action.payload;
     },
 
-    resetForgotPasswordSlice: () => {
+    resetForgotPasswordState: () => {
       return initialState;
     },
   },
 });
 
 export const {
-  resetForgotPasswordSlice,
-  updateForgotPasswordValues,
+  resetForgotPasswordState,
+  updateForgotPassword,
   updateForgotPasswordStage,
 } = forgotPasswordSlice.actions;
 
