@@ -56,10 +56,10 @@ const OtpInput = ({
             <InputOTPGroup key={index}>
               <InputOTPSlot
                 className={cn([
-                  error && touched && 'border-danger/70',
+                  error && touched && 'border-red-500/70',
                   !error &&
                     touched &&
-                    'border-primary-green ring-primary/50 ring-offset-2',
+                    'border-brand-primary ring-brand-primary/50',
                   className?.inputSlot,
                 ])}
                 index={index}
