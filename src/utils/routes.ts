@@ -11,6 +11,13 @@ export const appRoutes = {
     dropoff: '/schedule/dropoff',
   },
   history: '/history',
-  profile: '/profile',
+  settings: {
+    root: '/settings',
+    profile: {
+      root: '/settings/profile',
+      updatePhone: '/settings/profile/update-phone',
+      changePassword: '/settings/profile/change-password',
+    },
+  },
   withdraw: '/withdraw',
 };
