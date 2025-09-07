@@ -84,7 +84,7 @@ const HomePage = () => {
           <Button
             variant='secondary'
             className='flex items-center space-x-0.5 px-12'
-            onClick={() => router.push(appRoutes.withdraw)}
+            onClick={() => router.push(appRoutes.withdraw.root)}
           >
             <ArrowUpRight className='text-brand-primary w-5 aspect-square' />
             <p>Withdraw</p>

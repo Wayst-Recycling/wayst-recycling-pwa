@@ -6,6 +6,8 @@ import React from 'react';
 
 import NavigationHeader from '@/components/navigation-header';
 
+import { appRoutes } from '@/utils/routes';
+
 const WithdrawalPage = () => {
   const router = useRouter();
   const options = [
@@ -14,6 +16,7 @@ const WithdrawalPage = () => {
       active: true,
       title: 'Withdraw to Bank',
       description: 'Withdraw to your local bank account',
+      href: appRoutes.withdraw.bank,
     },
     {
       icon: (
@@ -27,6 +30,7 @@ const WithdrawalPage = () => {
       active: false,
       title: 'Withdraw to Crypto Wallet',
       description: 'Transfer to other crypto currencies',
+      href: appRoutes.withdraw.root,
     },
   ];
   return (
@@ -43,11 +47,13 @@ const WithdrawalPage = () => {
 
         <div className='mt-4 space-y-2'>
           {options.map((option, index) => (
-            <div
+            <button
               key={index}
-              className={`flex justify-between space-x-2 items-center p-3 border border-[#1111110D] rounded-xl transition-opacity ${
+              className={`flex justify-between space-x-2 items-center p-3 border border-[#1111110D] rounded-xl transition-opacity w-full ${
                 option.active ? '' : 'opacity-40 pointer-events-none'
               }`}
+              onClick={() => router.push(option.href)}
+              disabled={!option.active}
             >
               <div className='flex items-center space-x-2'>
                 {option.icon}
@@ -66,7 +72,7 @@ const WithdrawalPage = () => {
                 </div>
               </div>
               <ChevronRight className='w-4 h-4' />
-            </div>
+            </button>
           ))}
         </div>
       </div>

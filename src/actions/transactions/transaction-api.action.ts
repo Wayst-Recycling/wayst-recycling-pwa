@@ -1,4 +1,4 @@
-import { GET_METHOD } from '@/actions/action.constants';
+import { AuthenticatedTagTypes, GET_METHOD } from '@/actions/action.constants';
 import { IPaginatedResponse } from '@/actions/action.types';
 import { authenticated_global_api } from '@/actions/authenticated-api';
 import { GET_TRANSACTIONS_PATH } from '@/actions/transactions/transaction-api.constants';
@@ -16,6 +16,7 @@ const TransactionApi = authenticated_global_api.injectEndpoints({
         method: GET_METHOD,
         params,
       }),
+      providesTags: [AuthenticatedTagTypes.GET_ALL_TRANSACTIONS],
     }),
   }),
 });

@@ -7,6 +7,7 @@ import logger from '@/lib/logger';
 import {
   API_METHODS,
   AUTHENTICATED_GLOBAL_API_REDUCER_PATH,
+  AuthenticatedTagTypes,
 } from '@/actions/action.constants';
 import { INetworkErrorResponse } from '@/actions/action.types';
 // import { signOutAction } from '@/actions/auth/auth-actions.server';
@@ -115,5 +116,5 @@ export const authenticated_global_api = createApi({
   baseQuery: baseQuery(),
   reducerPath: AUTHENTICATED_GLOBAL_API_REDUCER_PATH,
   endpoints: () => ({}),
-  // tagTypes: Object.values(AuthenticatedTagTypes),
+  tagTypes: Object.values(AuthenticatedTagTypes),
 });
