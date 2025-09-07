@@ -31,3 +31,7 @@ export const API_METHODS = [
   DELETE_METHOD,
   PATCH_METHOD,
 ] as const;
+
+export enum AuthenticatedTagTypes {
+  GET_ALL_TRANSACTIONS = 'get_all_transactions_tag',
+}

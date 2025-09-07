@@ -19,5 +19,8 @@ export const appRoutes = {
       changePassword: '/settings/profile/change-password',
     },
   },
-  withdraw: '/withdraw',
+  withdraw: {
+    root: '/withdraw',
+    bank: '/withdraw/bank',
+  },
 };

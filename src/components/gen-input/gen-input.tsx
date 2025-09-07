@@ -65,7 +65,7 @@ const GenInput = ({
 }: GenInputProps) => {
   delete rest.initialError;
   delete rest.initialTouched;
-  delete rest.value;
+  // delete rest.value;
 
   const [hidden, setHidden] = useState<boolean>(true);
 
