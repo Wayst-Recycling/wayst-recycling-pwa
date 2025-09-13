@@ -113,7 +113,7 @@ const WithdrawBankPage = () => {
       <div className='p-5'>
         <p className='text-black/70'>Withdraw to your local bank account</p>
 
-        <form className='mt-4 space-y-2'>
+        <form className='mt-4 space-y-2' onSubmit={formik.handleSubmit}>
           <GenInput
             label='Account Number'
             id='accountNumber'
@@ -148,6 +148,7 @@ const WithdrawBankPage = () => {
 
           <Button
             type='submit'
+            className='w-full'
             disabled={isLoadingVerifyAccount}
             isLoading={isLoadingWithdraw}
           >
