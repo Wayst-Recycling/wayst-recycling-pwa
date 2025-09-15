@@ -58,7 +58,7 @@ const concatMiddleWare = [
 export const makeStore = () => {
   return configureStore({
     reducer: persistedReducer,
-    devTools: process.env.NODE_ENV !== 'production',
+    devTools: process.env.NEXT_PUBLIC_NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {

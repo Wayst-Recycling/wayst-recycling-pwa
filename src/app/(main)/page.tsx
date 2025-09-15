@@ -35,13 +35,13 @@ const HomePage = () => {
   const currency = currencies.find((x) => x.id === activeCurrency);
 
   const amount = () => {
-    if (currency && currency.index && data && data.data.CELO) {
-      return parseFloat(formatcUsd(parseFloat(data.data.CELO as string)));
+    if (currency && currency.index && data && data.data.cUSD) {
+      return parseFloat(formatcUsd(parseFloat(data.data.cUSD as string)));
     } else if (currency && currency.exchange && configurationResponse && data) {
       const rate =
         configurationResponse.data.find((x) => x.type === currency.exchange)
           ?.value ?? 0;
-      return parseFloat(formatcUsd(Number(rate) * parseFloat(data.data.CELO)));
+      return parseFloat(formatcUsd(Number(rate) * parseFloat(data.data.cUSD)));
     } else {
       return 0;
     }
