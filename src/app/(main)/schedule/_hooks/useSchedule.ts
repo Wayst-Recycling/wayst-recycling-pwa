@@ -10,6 +10,7 @@ import {
   scheduleInitialValues,
   scheduleValidationSchema,
 } from '@/app/(main)/schedule/_utils/constants';
+import { handleErrors } from '@/utils/error';
 import { removeNonDigit } from '@/utils/format';
 import { appRoutes } from '@/utils/routes';
 
@@ -42,8 +43,8 @@ export const useSchedule = () => {
         formik.resetForm();
         toast.success('Schedule successful');
         router.push(appRoutes.home);
-      } catch {
-        toast.error('Something went wrong');
+      } catch (err) {
+        handleErrors(err);
       }
     },
   });

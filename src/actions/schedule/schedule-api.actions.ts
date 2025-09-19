@@ -1,4 +1,8 @@
-import { GET_METHOD, POST_METHOD } from '@/actions/action.constants';
+import {
+  AuthenticatedTagTypes,
+  GET_METHOD,
+  POST_METHOD,
+} from '@/actions/action.constants';
 import {
   INetworkSuccessResponse,
   IPaginatedResponse,
@@ -8,7 +12,11 @@ import {
   DROPOFF_LOCATION_PATH,
   SCHEDULE_PATH,
 } from '@/actions/schedule/schedule-api.constants';
-import { ISchedule, RLocation } from '@/actions/schedule/schedule-api.types';
+import {
+  ISchedule,
+  RLocation,
+  RSchedule,
+} from '@/actions/schedule/schedule-api.types';
 
 const ScheduleApi = authenticated_global_api.injectEndpoints({
   overrideExisting: true,
@@ -19,6 +27,19 @@ const ScheduleApi = authenticated_global_api.injectEndpoints({
         method: POST_METHOD,
         data: payload,
       }),
+      invalidatesTags: [AuthenticatedTagTypes.GET_ALL_SCHEDULES],
+    }),
+
+    getSchedules: build.query<
+      IPaginatedResponse<RSchedule>,
+      { page: number; limit: number }
+    >({
+      query: (params) => ({
+        url: SCHEDULE_PATH,
+        method: GET_METHOD,
+        params,
+      }),
+      providesTags: [AuthenticatedTagTypes.GET_ALL_SCHEDULES],
     }),
 
     getDropoffLocations: build.query<
@@ -34,4 +55,8 @@ const ScheduleApi = authenticated_global_api.injectEndpoints({
   }),
 });
 
-export const { useScheduleMutation, useGetDropoffLocationsQuery } = ScheduleApi;
+export const {
+  useScheduleMutation,
+  useGetSchedulesQuery,
+  useGetDropoffLocationsQuery,
+} = ScheduleApi;
