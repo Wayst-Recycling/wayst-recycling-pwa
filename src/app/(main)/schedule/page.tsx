@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ScheduleList from '@/app/(main)/schedule/_components/schedule-list';
 import { appRoutes } from '@/utils/routes';
 
 const SchedulePage = () => {
@@ -33,6 +34,13 @@ const SchedulePage = () => {
           </p>
         </div>
       </Link>
+
+      <div className='mt-5 space-y-3'>
+        <div className='flex items-center justify-between'>
+          <p className='text-xl font-semibold'>Schedule History</p>
+        </div>
+        <ScheduleList />
+      </div>
     </div>
   );
 };

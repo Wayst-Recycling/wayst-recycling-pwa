@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Image from 'next/image';
+import { FaDollarSign } from 'react-icons/fa6';
 
 import { RTransaction } from '@/actions/transactions/transaction-api.types';
 import TransactionStatus from '@/app/(main)/_components/transaction-status';
@@ -71,15 +72,13 @@ const TransactionCard = ({ transaction }: { transaction: RTransaction }) => {
           </div>
         </div>
       )}
-      {transaction.type === 'daily claim' && (
+      {transaction.type === 'dailyClaim' && (
         <div key={transaction.id} className='mt-3 text-start'>
           <div className='mt-1 flex items-center justify-between rounded-lg bg-white p-3'>
             <div className='flex items-center space-x-2'>
-              {/* <Image
-                  src="/assets/gift.png"
-                  alt="gift"
-                  className="relative aspect-square w-11 object-contain"
-                /> */}
+              <div className='rounded-full border-3 w-8 h-8 flex items-center justify-center border-brand-primary'>
+                <FaDollarSign className='text-brand-primary w-5 h-5' />
+              </div>
               <div>
                 <p className='text-sm font-medium'>Daily Claim</p>
                 <div className='flex items-end space-x-1'>

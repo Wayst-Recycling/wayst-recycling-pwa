@@ -1,8 +1,8 @@
 export const formatcUsd = (balance: number | undefined) => {
   if (balance) {
-    return balance.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    return balance.toLocaleString(undefined, { maximumFractionDigits: 5 });
   }
-  return (0).toLocaleString(undefined, { maximumFractionDigits: 2 });
+  return (0).toLocaleString(undefined, { maximumFractionDigits: 5 });
 };
 
 export function removeNonDigit(amount: string) {

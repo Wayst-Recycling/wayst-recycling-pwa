@@ -11,20 +11,35 @@ import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/store';
 
 import { useGetConfigurationQuery } from '@/actions/configuration/configuration-api.action';
+import { useClaimDailyRewardMutation } from '@/actions/transactions/transaction-api.action';
 import { useGetWalletQuery } from '@/actions/wallet/wallet-api.actions';
 import CurrencySelect from '@/app/(main)/_components/currency-select';
 import FormatBalance from '@/app/(main)/_components/format-balance';
 import { TotalEarningsTooltip } from '@/app/(main)/_components/total-earnings-tooltip';
 import { currencies } from '@/app/(main)/_utils/constants';
 import TransactionList from '@/app/(main)/history/_components/transaction-list';
+import ScheduleList from '@/app/(main)/schedule/_components/schedule-list';
 import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { ROBO_URL } from '@/utils';
+import { handleErrors } from '@/utils/error';
 import { formatcUsd } from '@/utils/format';
 import { appRoutes } from '@/utils/routes';
 
 const HomePage = () => {
   const { data, isLoading } = useGetWalletQuery();
   const { data: sessionData } = useSession();
+
+  const [claimDailyReward, { isLoading: isLoadingClaimDailyReward }] =
+    useClaimDailyRewardMutation();
+
+  const handleClaimReward = async () => {
+    try {
+      await claimDailyReward().unwrap();
+      toast.success('Claimed 0.0001cUSD');
+    } catch (err) {
+      handleErrors(err);
+    }
+  };
 
   const { activeCurrency } = useAppSelector(
     (state) => state[CURRENCY_REDUCER_PATH],
@@ -108,8 +123,11 @@ const HomePage = () => {
               <p className='mt-2 text-xs font-medium'>Pickup</p>
             </Link>
             <button
-              onClick={() => toast.info('Coming Soon')}
-              style={{ filter: 'grayscale(100%)' }}
+              onClick={() => handleClaimReward()}
+              disabled={isLoadingClaimDailyReward}
+              style={{
+                filter: isLoadingClaimDailyReward ? 'grayscale(100%)' : '',
+              }}
               className='flex flex-col items-center rounded-xl border bg-white/10 py-3'
             >
               <Image
@@ -139,9 +157,22 @@ const HomePage = () => {
 
         <div className='mt-4 flex flex-col space-y-3'>
           <div className='flex items-center justify-between'>
+            <p className='text-xl font-semibold'>Schedule History</p>
+            <Link
+              href='/schedule'
+              className='rounded-full border bg-white p-1.5 shadow-md'
+            >
+              <ChevronRight size={12} />
+            </Link>
+          </div>
+          <ScheduleList home />
+        </div>
+
+        <div className='mt-4 flex flex-col space-y-3'>
+          <div className='flex items-center justify-between'>
             <p className='text-xl font-semibold'>Transaction History</p>
             <Link
-              href='/'
+              href='/history'
               className='rounded-full border bg-white p-1.5 shadow-md'
             >
               <ChevronRight size={12} />
