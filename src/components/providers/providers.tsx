@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 'use client';
 
 import { AppProgressProvider } from '@bprogress/next';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import { PropsWithChildren, useRef } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 import { Provider } from 'react-redux';
 import { Persistor, persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -24,6 +25,21 @@ const Providers = ({
     persistorRef.current = persistStore(storeRef.current);
   }
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then((registration) => {
+          console.log(
+            'Service Worker registered with scope:',
+            registration.scope,
+          );
+        })
+        .catch((error) => {
+          console.error('Service Worker registration failed:', error);
+        });
+    }
+  }, []);
   return (
     <SessionProvider session={session}>
       <Provider store={storeRef.current}>
