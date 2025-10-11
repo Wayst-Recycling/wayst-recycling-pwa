@@ -22,7 +22,6 @@ import ScheduleList from '@/app/(main)/schedule/_components/schedule-list';
 import { CURRENCY_REDUCER_PATH } from '@/slices/constants';
 import { ROBO_URL } from '@/utils';
 import { handleErrors } from '@/utils/error';
-import { formatcUsd } from '@/utils/format';
 import { appRoutes } from '@/utils/routes';
 
 const HomePage = () => {
@@ -51,12 +50,12 @@ const HomePage = () => {
 
   const amount = () => {
     if (currency && currency.index && data && data.data.cUSD) {
-      return parseFloat(formatcUsd(parseFloat(data.data.cUSD as string)));
+      return parseFloat(data.data.cUSD as string);
     } else if (currency && currency.exchange && configurationResponse && data) {
       const rate =
         configurationResponse.data.find((x) => x.type === currency.exchange)
           ?.value ?? 0;
-      return parseFloat(formatcUsd(Number(rate) * parseFloat(data.data.cUSD)));
+      return Number(rate) * parseFloat(data.data.cUSD as string);
     } else {
       return 0;
     }

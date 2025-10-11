@@ -24,7 +24,9 @@ const FormatBalance: React.FC<NumberProps> = ({
     <div>
       {!isLoading && hasValue && (
         <div>
-          <span className={wholeNumberClassName}>{wholePart}</span>
+          <span className={wholeNumberClassName}>
+            {wholePart.toLocaleString()}
+          </span>
           {decimalPart && (
             <span className={decimalClassName}>.{decimalPart}</span>
           )}
