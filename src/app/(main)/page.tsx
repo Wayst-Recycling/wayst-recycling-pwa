@@ -87,7 +87,7 @@ const HomePage = () => {
               <p className='text-xs'>{currency?.title}</p>
               <FormatBalance
                 isLoading={isLoading}
-                value={amount()}
+                value={parseFloat(amount().toFixed(2))}
                 decimalClassName='text-xl font-semibold'
                 wholeNumberClassName='text-4xl font-semibold'
               />
