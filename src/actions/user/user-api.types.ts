@@ -14,3 +14,25 @@ export type IEditProfile = {
   [EDIT_PROFILE_PHONE_KEY]: string;
   [EDIT_PROFILE_DIAL_CODE_KEY]: string;
 };
+
+export type ICreateDeliveryAddress = {
+  address: string;
+  region: string;
+  city: string;
+  state: string;
+  long: string;
+  lat: string;
+};
+
+export type TDeliveryAddress = {
+  address: string;
+  city: string;
+  createdAt: string;
+  deletedAt: string;
+  id: string;
+  lat: string;
+  long: string;
+  region: string;
+  state: string;
+  updatedAt: string;
+};

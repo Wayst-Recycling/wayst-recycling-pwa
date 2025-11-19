@@ -1,45 +1,40 @@
 'use client';
-import NaijaStates from 'naija-state-local-government';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
 
-import GenInput from '@/components/gen-input/gen-input';
+import { useDisclosure } from '@/hooks/useDisclosure';
+
 import InputNumber from '@/components/gen-input/input-number';
 import GenSelect from '@/components/gen-select/gen-select';
 import { Button } from '@/components/ui/button';
 
 import { useGetDropoffLocationsQuery } from '@/actions/schedule/schedule-api.actions';
+import { useGetDeliveryAddressQuery } from '@/actions/user/user-api.action';
+import AddressDrawer from '@/app/(main)/schedule/_components/address-drawer';
 import MaterialSelectItem from '@/app/(main)/schedule/_components/material-select-item';
 import { useSchedule } from '@/app/(main)/schedule/_hooks/useSchedule';
 import {
   materials,
-  SCHEDULE_ADDRESS_KEY,
-  SCHEDULE_CITY_KEY,
   SCHEDULE_CONTAINER_AMOUNT_KEY,
+  SCHEDULE_DROPOFF_ADDRESS_KEY,
   SCHEDULE_MATERIAL_AMOUNT_KEY,
   SCHEDULE_MATERIAL_KEY,
-  SCHEDULE_REGION_KEY,
+  SCHEDULE_PICKUP_ADDRESS_KEY,
 } from '@/app/(main)/schedule/_utils/constants';
 import { toTitleCase } from '@/utils/format';
 import { appRoutes } from '@/utils/routes';
 
 const ScheduleForm = ({ category }: { category: 'pickup' | 'dropoff' }) => {
-  const stateOptions = NaijaStates.states().map((state: string) => ({
-    label: state,
-    value: state,
+  const { formik, getSelectProps, isLoading } = useSchedule();
+  const addressDrawerProps = useDisclosure();
+
+  const { data, isLoading: isLoadingAddress } = useGetDeliveryAddressQuery();
+
+  const deliveryAddressOptions = data?.data.map((item) => ({
+    value: item.id,
+    label: item.address,
   }));
-
-  const { formik, getInputProps, getSelectProps, isLoading } = useSchedule();
-
-  const lgaOptions = formik.values[SCHEDULE_REGION_KEY]
-    ? NaijaStates.lgas(formik.values[SCHEDULE_REGION_KEY]).lgas.map(
-        (lga: string) => ({
-          label: lga,
-          value: lga,
-        }),
-      )
-    : [];
 
   const pathname = usePathname();
 
@@ -102,41 +97,34 @@ const ScheduleForm = ({ category }: { category: 'pickup' | 'dropoff' }) => {
                 placeholder='Please indicate number of bags'
                 {...getSelectProps(SCHEDULE_CONTAINER_AMOUNT_KEY)}
               />
-              {category === 'pickup' && (
-                <GenInput
-                  id={SCHEDULE_ADDRESS_KEY}
-                  label='Address'
-                  placeholder='Enter your full address'
-                  {...getInputProps(SCHEDULE_ADDRESS_KEY)}
-                />
-              )}
               {category === 'dropoff' && (
                 <GenSelect
-                  id={SCHEDULE_ADDRESS_KEY}
+                  id={SCHEDULE_DROPOFF_ADDRESS_KEY}
                   label='Location'
                   placeholder='Select address'
-                  {...getSelectProps(SCHEDULE_ADDRESS_KEY)}
+                  {...getSelectProps(SCHEDULE_DROPOFF_ADDRESS_KEY)}
                   options={locationOptions}
                 />
               )}
               {category === 'pickup' && (
                 <>
                   <GenSelect
-                    id={SCHEDULE_REGION_KEY}
-                    label='Region'
-                    placeholder='Enter your region'
-                    {...getSelectProps(SCHEDULE_REGION_KEY)}
-                    options={stateOptions}
+                    id={SCHEDULE_PICKUP_ADDRESS_KEY}
+                    label='Location'
+                    placeholder='Select address'
+                    {...getSelectProps(SCHEDULE_PICKUP_ADDRESS_KEY)}
+                    options={deliveryAddressOptions || []}
+                    isLoading={isLoadingAddress}
                   />
-                  {formik.values[SCHEDULE_REGION_KEY] && (
-                    <GenSelect
-                      id={SCHEDULE_CITY_KEY}
-                      label='City'
-                      placeholder='Enter your city'
-                      {...getSelectProps(SCHEDULE_CITY_KEY)}
-                      options={lgaOptions}
-                    />
-                  )}
+                  <div className='flex justify-end mt-1'>
+                    <button
+                      type='button'
+                      onClick={addressDrawerProps.onOpen}
+                      className='text-xs text-brand-primary font-semibold'
+                    >
+                      Add address
+                    </button>
+                  </div>
                 </>
               )}
             </div>
@@ -147,6 +135,8 @@ const ScheduleForm = ({ category }: { category: 'pickup' | 'dropoff' }) => {
           </form>
         )}
       </div>
+
+      <AddressDrawer {...addressDrawerProps} />
     </>
   );
 };
