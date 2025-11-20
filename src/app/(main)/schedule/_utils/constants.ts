@@ -16,7 +16,6 @@ export const scheduleInitialValues = {
   [SCHEDULE_CATEGORY_KEY]: '',
   [SCHEDULE_PICKUP_ADDRESS_KEY]: '',
   [SCHEDULE_DROPOFF_ADDRESS_KEY]: '',
-  description: '',
 };
 
 export const scheduleValidationSchema = object().shape({

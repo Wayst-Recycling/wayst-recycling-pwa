@@ -64,7 +64,7 @@ const HomePage = () => {
   const router = useRouter();
 
   return (
-    <div className='flex flex-col items-center justify-center px-5'>
+    <div className='flex flex-col items-center justify-center px-5 overflow-y-auto'>
       <div className='mx-auto mt-5 flex w-full flex-col pb-20'>
         <div className='flex w-full items-center justify-start space-x-2'>
           <Image

@@ -35,4 +35,5 @@ export const API_METHODS = [
 export enum AuthenticatedTagTypes {
   GET_ALL_TRANSACTIONS = 'get_all_transactions_tag',
   GET_ALL_SCHEDULES = 'get_all_schedules_tag',
+  GET_DELIVERY_ADDRESSES = 'get_delivery_addresses_tag',
 }

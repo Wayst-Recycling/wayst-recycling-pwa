@@ -11,7 +11,7 @@ import { appRoutes } from '@/utils/routes';
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className='h-screen'>
       {children}
       <div
         className='fixed bottom-0 flex w-full items-center justify-between border-t bg-white px-[13%] 2xl:px-[5%] py-6'

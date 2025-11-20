@@ -1,4 +1,5 @@
 import {
+  AuthenticatedTagTypes,
   GET_METHOD,
   PATCH_METHOD,
   POST_METHOD,
@@ -51,6 +52,7 @@ const UserApi = authenticated_global_api.injectEndpoints({
         url: GET_DELIVERY_ADDRESS_PATH,
         method: GET_METHOD,
       }),
+      providesTags: [AuthenticatedTagTypes.GET_DELIVERY_ADDRESSES],
     }),
 
     createDeliveryAddress: build.mutation<
@@ -62,6 +64,7 @@ const UserApi = authenticated_global_api.injectEndpoints({
         method: POST_METHOD,
         data,
       }),
+      invalidatesTags: [AuthenticatedTagTypes.GET_DELIVERY_ADDRESSES],
     }),
   }),
 });

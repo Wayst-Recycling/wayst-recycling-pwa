@@ -149,19 +149,19 @@ const GenSelect = ({
                 'hover:bg-primary hover:text-white p-2 bg-transparent focus:bg-primary focus-within:bg-primary capitalize',
                 [state.isSelected && 'font-semibold'],
                 [state.isFocused && 'bg-primary bg-opacity-10'],
-                [variant === 'primary' && 'text-base'],
+                [variant === 'primary' && 'text-sm'],
               ),
             control: () =>
               cn(
-                `w-full rounded-lg border p-3.5 capitalize outline-none transition-all duration-300 ease-in placeholder:text-base md:px-4 xl:placeholder:text-base flex`,
+                `w-full rounded-lg border p-3.5 capitalize outline-none transition-all duration-300 ease-in placeholder:text-sm md:px-4 xl:placeholder:text-sm flex`,
                 variant === 'primary' &&
                   'border bg-input-bg border-input-border placeholder:font-normal placeholder:text-ring',
               ),
             placeholder: () =>
-              'text-secondary-grey text-base md:text-base lg:text-base',
-            noOptionsMessage: () => 'text-base lg:text-base',
+              'text-secondary-grey text-sm md:text-sm lg:text-sm',
+            noOptionsMessage: () => 'text-sm lg:text-sm',
             dropdownIndicator: () => cn('text-primary-black/80 p-0'),
-            input: () => cn('p-0'),
+            input: () => cn('p-0 text-sm'),
             multiValue: () => 'bg-primary/80 text-white flex rounded-sm px-1',
             multiValueLabel: () => 'text-[0.85em]',
             multiValueRemove: () => 'hover:bg-primary-red',
@@ -179,7 +179,12 @@ const GenSelect = ({
               gap: '0.25rem',
             }),
             dropdownIndicator: () => ({}),
-            input: (baseStyles) => ({ ...baseStyles, margin: 0, padding: 0 }),
+            input: (baseStyles) => ({
+              ...baseStyles,
+              margin: 0,
+              padding: 0,
+              fontSize: '0.85em',
+            }),
             indicatorSeparator: () => ({}),
             placeholder: (base) => ({ ...base }),
             menuList: (base) => ({ ...base, maxHeight: '10rem' }),

@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 
 import { useDisclosure } from '@/hooks/useDisclosure';
 
-import InputNumber from '@/components/gen-input/input-number';
 import GenSelect from '@/components/gen-select/gen-select';
 import { Button } from '@/components/ui/button';
 
@@ -80,22 +79,54 @@ const ScheduleForm = ({ category }: { category: 'pickup' | 'dropoff' }) => {
             onSubmit={formik.handleSubmit}
           >
             <div className='space-y-3'>
-              <InputNumber
+              <GenSelect
                 id={SCHEDULE_MATERIAL_AMOUNT_KEY}
                 label={`Number of ${toTitleCase(formik.values[SCHEDULE_MATERIAL_KEY])}s`}
-                placeholder='Minimum of 50 pieces'
+                placeholder='Number of pieces'
                 {...getSelectProps(SCHEDULE_MATERIAL_AMOUNT_KEY)}
-                // value={formatAmount(
-                //   String(formik.values[PICKUP_MATERIAL_AMOUNT_KEY])
-                // )}
-                // inputMode="numeric"
+                options={[
+                  {
+                    value: '50-100',
+                    label: '50-100 pieces',
+                  },
+                  {
+                    value: '100-200',
+                    label: '100-200 pieces',
+                  },
+                  {
+                    value: '200-300',
+                    label: '200-300 pieces',
+                  },
+                  {
+                    value: '500+',
+                    label: '500+ pieces',
+                  },
+                ]}
               />
 
-              <InputNumber
+              <GenSelect
                 id={SCHEDULE_CONTAINER_AMOUNT_KEY}
                 label='Number of Bags'
-                placeholder='Please indicate number of bags'
+                placeholder='Number of bags'
                 {...getSelectProps(SCHEDULE_CONTAINER_AMOUNT_KEY)}
+                options={[
+                  {
+                    value: '1-10',
+                    label: '1-10 bags',
+                  },
+                  {
+                    value: '10-20',
+                    label: '10-20 bags',
+                  },
+                  {
+                    value: '20-30',
+                    label: '20-30 bags',
+                  },
+                  {
+                    value: '30+',
+                    label: '30+ bags',
+                  },
+                ]}
               />
               {category === 'dropoff' && (
                 <GenSelect
